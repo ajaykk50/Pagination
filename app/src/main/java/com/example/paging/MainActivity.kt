@@ -1,6 +1,7 @@
 package com.example.paging
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -11,10 +12,22 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.lifecycleScope
 import com.example.paging.ui.theme.PagingTheme
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,12 +35,24 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             PagingTheme {
+                var showBackground by remember { mutableStateOf(false) }
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
                         name = "Android",
                         modifier = Modifier.padding(innerPadding)
                     )
-                    Background()
+
+                    LaunchedEffect(Unit) {
+                        showBackground = false
+                        delay(2000)
+                        showBackground = true
+                    }
+
+                    if (!showBackground) {
+                        Background()
+                    } else {
+                        Login()
+                    }
 
                 }
             }
@@ -36,9 +61,22 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Background(){
+fun Background() {
     Column(
-        modifier = Modifier.background(color = Color.Red)
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = Color.Red)
+    ) {
+
+    }
+}
+
+@Composable
+fun Login() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = Color.Blue)
     ) {
 
     }
