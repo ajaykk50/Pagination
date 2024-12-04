@@ -67,7 +67,8 @@ fun Background() {
             .fillMaxSize()
             .background(color = Color.Red)
     ) {
-            Text("aaaaaaaaaaaa")
+        Text("aaaaaaaaaaaa")
+        Text("bbbbbb")
     }
 }
 
